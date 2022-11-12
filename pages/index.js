@@ -1,3 +1,4 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
@@ -7,6 +8,7 @@ import { StyledTimeline } from "../src/components/Timeline";
 function HomePage() {
 const estiloHomePage = {  }
 
+const [valorDoFiltro, setValorDoFiltro] = React.useState("");
 
     // console.log(config.playlists)
     return (
@@ -14,9 +16,9 @@ const estiloHomePage = {  }
         <>
         <CSSReset/>
         <div style={estiloHomePage} >
-            <Menu />
+            <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}/>
             <Header />
-            <Timeline playlists={config.playlists} />
+            <Timeline searchValue={valorDoFiltro} playlists={config.playlists} />
 
         </div>
 
@@ -73,7 +75,7 @@ function Header() {
     )
 }
 
-function Timeline(props) {
+function Timeline({searchValue, ...props}) {
     // console.log("dentro do componente", props.playlists);
     const playlistsNames = Object.keys(props.playlists);
     return (
@@ -87,7 +89,11 @@ function Timeline(props) {
                     <section>
                         <h2>{playlistsNames}</h2>
                         <div>
-                            {videos.map((video) => {
+                            {videos.filter((video) =>{
+                                const titleNormalized = video.title.toLowerCase();
+                                const searchValueNormalized = searchValue.toLowerCase();
+                                return titleNormalized.includes(searchValueNormalized)
+                            }).map((video) => {
                                 return (
                                     <a href={video.url}>
                                         <img src={video.thumb} />
