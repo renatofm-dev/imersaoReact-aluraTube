@@ -46,7 +46,6 @@ const SyledHeader = styled.div`
         }
 
         .user-info {
-            margin-top: 50px;
             display: flex;
             align-items: center;
             width: 100%;
@@ -55,10 +54,17 @@ const SyledHeader = styled.div`
 
         }
     `
+const StyledBanner =styled.div `
+//background-color: blue;
+background-image: url(${config.bg});
+height: 230px;
+background-repeat: no-repeat;
+background-size: cover;
+ `
 function Header() {
     return (
         <SyledHeader>
-            {/* <img src="Banner"/> */}
+        <StyledBanner/>
             <section className="user-info">
                 <img src={`https://github.com/${config.github}.png`} />
                 <div>
